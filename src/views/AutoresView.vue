@@ -1,29 +1,31 @@
 <script setup>
 import { ref, reactive, onMounted } from "vue";
 import {useAutoresStore} from "@/stores/autores";
-const autoresStore = useAutoresStore();
+
+const autoresStore = new useAutoresStore();
 
 const defaultAutor = { id: null, nome: "", email: "" };
-const autor = reactive({ ...defaultAutor });
+console.log(defaultAutor, {defaultAutor}, {...defaultAutor});
+const autor = ref({ ...defaultAutor });
 
 
 onMounted(async () => {
   await autoresStore.getAutores();
 });
 
-function salvar(autor) {
-  if (autor.id) {
-    autoresStore.updateAutor(autor);
+function salvar() {
+  if (autor.id !== null) {
+    autoresStore.updateAutor(autor.value);
   } else {
-    autoresStore.createAutor(autor);
+    autoresStore.createAutor(autor.value);
   }
   autoresStore.getAutores();
 }
 function limpar() {
-  Object.assign(autor, { ...defaultAutor });
+  Object.assign(autor.value, { ...defaultAutor });
 }
 function editar(autor_para_editar) {
-  Object.assign(autor, autor_para_editar);
+  Object.assign(autor.value, autor_para_editar);
 }
 function excluir(autor){
   autoresStore.deleteAutor(autor.id);
@@ -42,11 +44,11 @@ function excluir(autor){
       <button @click="limpar">Limpar</button>
     </div>
     <ul class="categoria-list">
-      <li v-for="autor in autoresStore.autores" :key="autor.id">
-        <span @click="editar(autor)">
-          ({{ autor.id }}) - {{ autor.nome }} - {{ autor.email }}
+      <li v-for="item in autoresStore.autores" :key="item.id">
+        <span @click="editar(item)">
+          ({{ item.id }}) - {{ item.nome }} - {{ item.email }}
         </span>
-        <button @click="excluir(autor)">Excluir</button>
+        <button @click="excluir(item)">Excluir</button>
       </li>
     </ul>
   </div>

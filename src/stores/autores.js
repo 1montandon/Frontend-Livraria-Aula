@@ -2,6 +2,8 @@ import { defineStore } from "pinia";
 import { computed, reactive } from "vue";
 import AutoresService from "../services/autores";
 
+const autoresService = new AutoresService();
+
 export const useAutoresStore = defineStore('autor', () => {
     const state = reactive({
         autores: [],
@@ -16,7 +18,7 @@ export const useAutoresStore = defineStore('autor', () => {
     const getAutores = async () => {
         state.loading = true
         try{
-            state.autores = await AutoresService.getAutores()
+            state.autores = await autoresService.getAutores()
         }
         catch(error){
             state.error = error
@@ -29,7 +31,9 @@ export const useAutoresStore = defineStore('autor', () => {
     const createAutor = async (autor) => {
         state.loading = true
         try{
-            state.autor = await AutoresService.addAutor(autor)
+            state.autor = await autoresService.addAutor(autor)
+            await getAutores()
+
         }
         catch(error){
             state.error = error
@@ -42,7 +46,8 @@ export const useAutoresStore = defineStore('autor', () => {
     const updateAutor = async (autor) => {
         state.loading = true
         try{
-            state.autor = await AutoresService.updateAutor(autor)
+            state.autor = await autoresService.updateAutor(autor)
+            await getAutores()  
         }
         catch(error){
             state.error = error
@@ -55,7 +60,9 @@ export const useAutoresStore = defineStore('autor', () => {
     const deleteAutor = async (id) => {
         state.loading = true
         try{
-            state.autor = await AutoresService.deleteAutor(id)
+            state.autor = await autoresService.deleteAutor(id)
+            await getAutores()
+
         }
         catch(error){
             state.error = error
