@@ -4,7 +4,7 @@ class AutoresService {
 
     async getAutores(){
     try {
-        const { data } = await axios.get("/autores/");
+        const { data } = await axios.get("api/autores/");
         return data.results;
     }
     catch (error){
@@ -14,7 +14,7 @@ class AutoresService {
 
     async addAutor(autor){
     try{
-        const { data } = await axios.post("/autores/", autor)
+        const { data } = await axios.post("api/autores/", autor)
         return data.results;
     }
     catch (error){
@@ -23,7 +23,7 @@ class AutoresService {
 
     async updateAutor(autor){
         try{
-            const { data } = await axios.put(`/autores/${autor.id}/`, autor)
+            const { data } = await axios.put(`api/autores/${autor.id}/`, autor)
             return data.results;
         }
         catch(error){
@@ -33,7 +33,7 @@ class AutoresService {
     
     async deleteAutor(id){
         try{
-            const { data } = await axios.delete( `/autores/${id}/`)
+            const { data } = await axios.delete( `api/autores/${id}/`)
             return data.results;
         }
         catch{

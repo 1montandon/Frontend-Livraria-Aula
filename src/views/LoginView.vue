@@ -1,12 +1,29 @@
 <script setup>
-import "@passageidentity/passage-elements/passage-auth";
+import axios from 'axios'
+import {onMounted, reactive} from 'vue'
+import { useAuthStore } from '../stores/auth';
+
+const authStore = new useAuthStore();
+
+const user = reactive({
+  email: 'comprador@a.com',
+  password: 'senha.123'
+
+})
 </script>
 
 <template>
   <div class="container">
     <h1>Login</h1>
     <div class="authContainer">
-      <passage-auth app-id="GKj1efF61W4xT1JFyDuKPfsK"></passage-auth>
+      <form>
+        <input type="email" placeholder="email" v-model="user.email"/>
+        <input type="password" placeholder="Password" v-model="user.password" />
+      </form>
+      <button @click="authStore.getToken(user)">Login</button>
+      token {{ authStore.state.token }}
+      
+
     </div>
   </div>
 </template>
