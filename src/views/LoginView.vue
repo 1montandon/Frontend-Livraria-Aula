@@ -21,7 +21,12 @@ const user = reactive({
         <input type="password" placeholder="Password" v-model="user.password" />
       </form>
       <button @click="authStore.getToken(user)">Login</button>
+      <hr>
       token {{ authStore.state.token }}
+      <hr>
+      decoded {{ authStore.decodedToken?.name }}
+      <hr>
+      {{ authStore.state }}
       
 
     </div>

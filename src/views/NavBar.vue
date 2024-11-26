@@ -5,7 +5,7 @@ import { useAuthStore } from '@/stores/auth'; // Importa a store de autenticaç�
 const authStore = useAuthStore();
 
 // Computa se o usuário está logado e obtém os dados do usuário
-const isLoggedIn = computed(() => authStore.loggedIn);
+const isLoggedIn = computed(() => authStore.isLogged);
 const user = computed(() => authStore.user);
 
 // Estado reativo para controlar o dropdown
@@ -33,8 +33,8 @@ const toggleDropdown = () => {
         <!-- Foto do usuário com dropdown -->
         <div class="user-menu" @click="toggleDropdown">
           <img
-            v-if="user.foto && user.foto.url"
-            :src="user.foto.url"
+            v-if="user?.foto && user?.foto.url"
+            :src="user?.foto.url"
             alt="Foto do usuário"
             class="user-photo-small"
           />
@@ -46,8 +46,8 @@ const toggleDropdown = () => {
           />
 
           <div v-if="showDropdown" class="dropdown-menu">
-            <p><strong>{{ user.name }}</strong></p>
-            <p class="email">{{ user.email }}</p> <!-- Adiciona classe email -->
+            <p><strong>{{ user?.nome }}</strong></p>
+            <p class="email">{{ user?.email }}</p> <!-- Adiciona classe email -->
             <router-link to="/logout" class="dropdown-item">Logout</router-link>
           </div>
         </div>

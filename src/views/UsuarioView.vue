@@ -4,6 +4,7 @@ import { useAuthStore } from '@/stores/auth';
 
 const authStore = useAuthStore();
 const usuario = computed(() => authStore.user);
+console.log(usuario, authStore.state.token);
 
 const formatDate = (dateString) => {
   if (!dateString) return null;
@@ -34,7 +35,7 @@ const formatDate = (dateString) => {
       <p>Staff: <strong> {{ usuario.is_staff ? 'Sim' : 'Não' }}</strong></p>
       <p>Último Login: <strong> {{ formatDate(usuario.last_login) || 'Nunca logado' }}</strong></p>
       <!-- <p>Grupos: <strong> {{ usuario.groups.join(', ') }}</strong></p> -->
-      <p>Grupos: <strong>{{ usuario.groups.map(group => group.name).join(', ') }}</strong></p>
+      <!-- <p>Grupos: <strong>{{ usuario.groups.map(group => group.name).join(', ') }}</strong></p> -->
 
     </div>
   </div>
