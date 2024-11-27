@@ -3,47 +3,30 @@ import { onMounted, ref } from 'vue';
 import { PassageUser } from '@passageidentity/passage-elements/passage-user';
 import { useAuthStore } from '@/stores/auth';
 
-// const authStore = useAuthStore();
-// const psg_auth_token = ref('');
-// const copyMessageVisible = ref(false);
+const authStore = useAuthStore();
+const copyMessageVisible = ref(false);
+const authToken = authStore.state.token
+const user = authStore.user;
 
-// const getUserInfo = async () => {
-//   try {
-//     const authToken = localStorage.getItem('psg_auth_token');
-//     const passageUser = new PassageUser(authToken);
-//     const user = await passageUser.userInfo(authToken);
-//     psg_auth_token.value = authToken;
-//     if (user) {
-//       await authStore.setToken(authToken);
-//     } else {
-//       authStore.unsetToken();
-//     }
-//   } catch (error) {
-//     authStore.unsetToken();
-//   }
-// };
+const copyToClipboard = () => {
+  navigator.clipboard.writeText(authToken).then(() => {
+    copyMessageVisible.value = true;
+    setTimeout(() => {
+      copyMessageVisible.value = false;
+    }, 2000);
+  }).catch(err => {
+    console.error('Erro ao copiar o token: ', err);
+  });
+};
 
-// const copyToClipboard = () => {
-//   navigator.clipboard.writeText(psg_auth_token.value).then(() => {
-//     copyMessageVisible.value = true;
-//     setTimeout(() => {
-//       copyMessageVisible.value = false;
-//     }, 2000);
-//   }).catch(err => {
-//     console.error('Erro ao copiar o token: ', err);
-//   });
-// };
 
-// onMounted(() => {
-//   getUserInfo();
-// });
 </script>
 
 <template>
   <div class="container">
-    <!-- <button @click="copyToClipboard">Copiar token de autenticação</button>
+    <button @click="copyToClipboard">Copiar token de autenticação</button>
     <p v-if="copyMessageVisible" class="copy-message">Token copiado com sucesso!</p>
-    <p>{{ psg_auth_token }}</p> -->
+    <p>{{ authToken }}</p>
   </div>
 </template>
 

@@ -1,9 +1,9 @@
-import axios from "axios";
+import { api } from "../plugins/api";
 
 class AuthService {
   async getToken(user){
     try{
-      const { data }  = await axios.post("token/", user)
+      const { data }  = await api.post("token/", user)
       return data.access
     }
     catch(error){

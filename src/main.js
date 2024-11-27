@@ -1,15 +1,19 @@
 import { createApp } from 'vue';
-import { createPinia } from 'pinia';
+import pinia from './plugins/pinia'
+
 
 import App from './App.vue';
 import router from './router';
-import './plugins/axios';
+import { setupInterceptors } from '@/plugins/api';
+
 
 import './assets/main.css';
 
 const app = createApp(App);
 ''
-app.use(createPinia());
+app.use(pinia)
 app.use(router);
 
 app.mount('#app');
+
+setupInterceptors()
